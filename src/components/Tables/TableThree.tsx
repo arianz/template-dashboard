@@ -63,7 +63,7 @@ const TableThree = () => {
           placeholder="Cari Nama AM"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border rounded px-4 py-2"
+          className="border rounded px-4 py-2 dark:border-strokedark dark:bg-boxdark"
         />
       </div>
       <div className="max-w-full overflow-x-auto">
