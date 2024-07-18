@@ -3,44 +3,44 @@ import { useNavigate } from 'react-router-dom';
 
 const packageData: Package[] = [
   {
-    name: 'Ferizka',
+    name: 'Layanan A',
     price: 0.0,
-    invoiceDate: `100`,
+    invoiceDate: `100.000`,
     status: 'Paid',
   },
   {
-    name: 'Chairul',
+    name: 'Layanan B',
     price: 59.0,
-    invoiceDate: `200`,
+    invoiceDate: `250.000`,
     status: 'Paid',
   },
   {
-    name: 'Andika',
+    name: 'Layanan C',
     price: 99.0,
-    invoiceDate: `200`,
+    invoiceDate: `200.000`,
     status: 'Unpaid',
   },
   {
-    name: 'Karen',
+    name: 'Layanan D',
     price: 59.0,
-    invoiceDate: `100`,
+    invoiceDate: `150.000`,
     status: 'Pending',
   },
 ];
 
-const TableThree = () => {
-  const navigate = useNavigate();
+const ActiveServices = () => {
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <h1 className="mb-4 font-semibold text-lg">Layanan Aktif</h1>
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
               <th className="min-w-[220px] py-4 px-4 font-medium text-center text-black dark:text-white xl:pl-11">
-                Nama Account Manager
+                Layanan
               </th>
               <th className="min-w-[150px] py-4 px-4 font-medium text-center text-black dark:text-white">
-                Jumlah Pelanggan diassign
+                Revenue bulan terakhir
               </th>
             </tr>
           </thead>
@@ -48,7 +48,6 @@ const TableThree = () => {
             {packageData.map((packageItem, key) => (
               <tr
                 key={key}
-                onClick={() => navigate(`/detail-am/${key}`)}
                 className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800"
               >
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
@@ -70,4 +69,4 @@ const TableThree = () => {
   );
 };
 
-export default TableThree;
+export default ActiveServices;
