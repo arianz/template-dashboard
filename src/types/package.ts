@@ -1,6 +1,6 @@
 export type Package = {
-  name: string;
-  price: number;
-  invoiceDate: string;
-  status: string;
+  NAMA_AM: string;
+  JML_PELANGGAN: string;
+  NIPNAS: string;
+  NAMA_PELANGGAN: string;
 };

@@ -1,35 +1,25 @@
-import { Package } from '../../types/package';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const packageData: Package[] = [
-  {
-    name: 'Ferizka',
-    price: 0.0,
-    invoiceDate: `100`,
-    status: 'Paid',
-  },
-  {
-    name: 'Chairul',
-    price: 59.0,
-    invoiceDate: `200`,
-    status: 'Paid',
-  },
-  {
-    name: 'Andika',
-    price: 99.0,
-    invoiceDate: `200`,
-    status: 'Unpaid',
-  },
-  {
-    name: 'Karen',
-    price: 59.0,
-    invoiceDate: `100`,
-    status: 'Pending',
-  },
-];
+import axios from 'axios';
+import { Package } from '../../types/package';
 
 const TableThree = () => {
+  const [packageData, setPackageData] = useState<Package[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/mapping_am');
+        setPackageData(response.data);
+      } catch (error) {
+        console.error('Error fetching package data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <div className="max-w-full overflow-x-auto">
@@ -48,17 +38,17 @@ const TableThree = () => {
             {packageData.map((packageItem, key) => (
               <tr
                 key={key}
-                onClick={() => navigate(`/detail-am/${key}`)}
+                onClick={() => navigate(`/detail-am/${packageItem.NAMA_AM}`)}
                 className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800"
               >
                 <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-center text-black dark:text-white">
-                    {packageItem.name}
+                    {packageItem.NAMA_AM}
                   </h5>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                   <p className="text-center text-black dark:text-white">
-                    {packageItem.invoiceDate}
+                    {packageItem.JML_PELANGGAN}
                   </p>
                 </td>
               </tr>

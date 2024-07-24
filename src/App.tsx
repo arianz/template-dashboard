@@ -7,7 +7,7 @@ import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Calendar from './pages/Calendar';
 import Chart from './pages/Chart';
-import ECommerce from './pages/Dashboard/ECommerce';
+import DetailNipnas from './pages/DetailNipnas';
 import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
 import Profile from './pages/Profile';
@@ -36,11 +36,11 @@ function App() {
     <DefaultLayout>
       <Routes>
         <Route
-          path="/tables/:id"
+          path="/detail-am/:name/:nipnas"
           element={
             <>
               <PageTitle title="Detail NIPNAS" />
-              <ECommerce />
+              <DetailNipnas />
             </>
           }
         />
@@ -144,7 +144,7 @@ function App() {
           }
         />
         <Route
-          path="/detail-am/:id"
+          path="/detail-am/:name"
           element={
             <>
               <PageTitle title="Detail AM" />
