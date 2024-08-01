@@ -16,11 +16,13 @@ collection.connect(err => {
     const createTableQuery = `
         CREATE TABLE IF NOT EXISTS collection (
             ACCOUNT_NUMBER VARCHAR(255),
+            NIPNAS VARCHAR(255),
             PAYMENT_CAT VARCHAR(255),
             WITEL VARCHAR(255),
             SALDO_AKHIR FLOAT,
             PERIODE DATE,
-            PRIMARY KEY (ACCOUNT_NUMBER)
+            PRIMARY KEY (ACCOUNT_NUMBER),
+            UNIQUE (ACCOUNT_NUMBER, NIPNAS)
         )
     `;
 

@@ -3,4 +3,6 @@ export type Package = {
   JML_PELANGGAN: string;
   NIPNAS: string;
   NAMA_PELANGGAN: string;
+  layanan: string;
+  revenue: string;
 };

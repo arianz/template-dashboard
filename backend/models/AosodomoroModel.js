@@ -11,12 +11,13 @@ const aosodomoro = mysql.createConnection({
 aosodomoro.connect(err => {
     if (err) throw err;
     console.log('MySQL connected...');
-    
+
     // Buat tabel jika belum ada
     const createTableQuery = `
         CREATE TABLE IF NOT EXISTS aosodomoro (
             ORDER_ID VARCHAR(255),
             ORDER_SUBTYPE VARCHAR(255),
+            ORDER_TYPE VARCHAR(255),
             WITEL_BILL VARCHAR(255),
             LI_PRODUCT_NAME VARCHAR(255),
             KATEGORI_PRODUCT VARCHAR(255),
@@ -26,7 +27,8 @@ aosodomoro.connect(err => {
             ORDER_STATUS VARCHAR(255),
             NIPNAS VARCHAR(255),
             PRIODE VARCHAR(255),
-            PRIMARY KEY (NIPNAS)
+            PRIMARY KEY (ORDER_ID),
+            UNIQUE (ORDER_ID, NIPNAS)
         )
     `;
 

@@ -8,3 +8,13 @@ export const getCollection = (req, res) => {
         res.send(results);
     });
 };
+
+export const getCollectionByNipnas = (req, res) => {
+    const { nipnas } = req.params;
+    const query = 'SELECT * FROM collection WHERE NIPNAS = ?';
+
+    collection.query(query, [nipnas], (err, results) => {
+        if (err) throw err;
+        res.send(results);
+    });
+};

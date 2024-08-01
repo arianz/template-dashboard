@@ -17,6 +17,7 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
 import TableDetails from './pages/TableDetails';
+import UploadPelanggan from './pages/UploadPelanggan';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -149,6 +150,15 @@ function App() {
             <>
               <PageTitle title="Detail AM" />
               <TableDetails />
+            </>
+          }
+        />
+        <Route
+          path="/upload-pelanggan"
+          element={
+            <>
+              <PageTitle title="Upload Pelanggan" />
+              <UploadPelanggan />
             </>
           }
         />
