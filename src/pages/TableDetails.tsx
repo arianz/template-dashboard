@@ -6,7 +6,7 @@ const TableDetails = () => {
 
   return (
     <>
-      <Breadcrumb pageName="Daftar Pelanggan AM" />
+      <Breadcrumb pageName="Daftar Pelanggan" />
 
       <div className="flex flex-col gap-10">
         <DetailsAM />

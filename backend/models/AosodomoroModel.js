@@ -18,7 +18,6 @@ aosodomoro.connect(err => {
             ORDER_ID VARCHAR(255),
             ORDER_SUBTYPE VARCHAR(255),
             ORDER_TYPE VARCHAR(255),
-            WITEL_BILL VARCHAR(255),
             LI_PRODUCT_NAME VARCHAR(255),
             KATEGORI_PRODUCT VARCHAR(255),
             WITEL VARCHAR(255),
@@ -27,6 +26,7 @@ aosodomoro.connect(err => {
             ORDER_STATUS VARCHAR(255),
             NIPNAS VARCHAR(255),
             PRIODE VARCHAR(255),
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (ORDER_ID),
             UNIQUE (ORDER_ID, NIPNAS)
         )

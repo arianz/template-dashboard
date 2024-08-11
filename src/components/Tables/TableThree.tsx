@@ -5,6 +5,8 @@ import { Package } from '../../types/package';
 
 const TableThree = () => {
   const [packageData, setPackageData] = useState<Package[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage = 5;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,6 +21,15 @@ const TableThree = () => {
 
     fetchData();
   }, []);
+
+  const totalPages = Math.ceil(packageData.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = packageData.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (pageNumber: number) => {
+    if (pageNumber < 1 || pageNumber > totalPages) return;
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -35,7 +46,7 @@ const TableThree = () => {
             </tr>
           </thead>
           <tbody>
-            {packageData.map((packageItem, key) => (
+            {currentItems.map((packageItem, key) => (
               <tr
                 key={key}
                 onClick={() => navigate(`/detail-am/${packageItem.NAMA_AM}`)}
@@ -55,6 +66,26 @@ const TableThree = () => {
             ))}
           </tbody>
         </table>
+        {/* Pagination Controls */}
+        <div className="flex justify-center items-center py-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            className="px-3 py-1 mx-1 text-black dark:text-white bg-gray-200 dark:bg-gray-800 rounded"
+            disabled={currentPage === 1}
+          >
+            &lt;
+          </button>
+          <span className="px-3 py-1 text-black dark:text-white">
+            {currentPage} / {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            className="px-3 py-1 mx-1 text-black dark:text-white bg-gray-200 dark:bg-gray-800 rounded"
+            disabled={currentPage === totalPages}
+          >
+            &gt;
+          </button>
+        </div>
       </div>
     </div>
   );

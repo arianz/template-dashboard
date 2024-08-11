@@ -8,11 +8,14 @@ import CollNonPOTS from '../components/Tables/CollectionNonPOTS';
 import { Package } from '../types/package'; // Import the Package type
 
 const DetailNipnas: React.FC = () => {
-  const { name, nipnas } = useParams<{ name: string; nipnas: string }>(); // Define the expected type of params
-  const [customerData, setCustomerData] = useState<Package | null>(null); // Use Package type for customerData
-  const [pmsData, setPmsData] = useState<any[]>([]); // State to store PMS data
-  const [ordersData, setOrdersData] = useState<any[]>([]); // State to store orders data
-  const [collectionsData, setCollectionsData] = useState<any[]>([]); // State to store collections data
+  const { name, nipnas } = useParams<{ name: string; nipnas: string }>();
+  const [customerData, setCustomerData] = useState<Package | null>(null);
+  const [pmsData, setPmsData] = useState<any[]>([]);
+  const [ordersData, setOrdersData] = useState<any[]>([]);
+  const [collectionsData, setCollectionsData] = useState<any[]>([]);
+  const [pmsUpdatedAt, setPmsUpdatedAt] = useState<string | null>(null);
+  const [ordersUpdatedAt, setOrdersUpdatedAt] = useState<string | null>(null);
+  const [collectionsUpdatedAt, setCollectionsUpdatedAt] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCustomerDetails = async () => {
@@ -51,10 +54,40 @@ const DetailNipnas: React.FC = () => {
       }
     };
 
+    const fetchPmsUpdatedAt = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/pms-updated-at/${nipnas}`);
+        setPmsUpdatedAt(response.data.updated_at);
+      } catch (error) {
+        console.error('Error fetching PMS updated_at:', error);
+      }
+    };
+
+    const fetchOrdersUpdatedAt = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/aosodomoro-updated-at/${nipnas}`);
+        setOrdersUpdatedAt(response.data.updated_at);
+      } catch (error) {
+        console.error('Error fetching Aosodomoro updated_at:', error);
+      }
+    };
+
+    const fetchCollectionsUpdatedAt = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/collection-updated-at/${nipnas}`);
+        setCollectionsUpdatedAt(response.data.updated_at);
+      } catch (error) {
+        console.error('Error fetching Collection updated_at:', error);
+      }
+    };
+
     fetchCustomerDetails();
     fetchPmsData();
     fetchOrdersData();
     fetchCollectionsData();
+    fetchPmsUpdatedAt();
+    fetchOrdersUpdatedAt();
+    fetchCollectionsUpdatedAt();
   }, [name, nipnas]);
 
   if (!customerData) {
@@ -67,7 +100,7 @@ const DetailNipnas: React.FC = () => {
         <div className="text-md rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
           <p>Nipnas: {customerData.NIPNAS}</p>
           <p>Nama Pelanggan: {customerData.NAMA_PELANGGAN}</p>
-          {/*<p>Assigned to: {customerData.NAMA_AM}</p>*/}
+          <p>Nama AM: {name}</p>
         </div>
       </div>
 
@@ -75,18 +108,18 @@ const DetailNipnas: React.FC = () => {
         <ChartOne pmsData={pmsData} />
         
         <div className="col-span-12 xl:col-span-8">
-          <ActiveServices pmsData={pmsData} /> {/* Pass pmsData as a prop */}
+          <ActiveServices pmsData={pmsData} />
         </div>
         <div className="col-span-12 xl:col-span-8 overflow-x-auto">
-          <Aosodomoro ordersData={ordersData} /> {/* Pass ordersData as a prop */}
+          <Aosodomoro ordersData={ordersData} />
         </div>
         <div className="col-span-12 xl:col-span-8">
-          <CollNonPOTS collectionsData={collectionsData} /> {/* Pass collectionsData as a prop */}
+          <CollNonPOTS collectionsData={collectionsData} />
         </div>
         <div className="text-md rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 col-span-6">
-          <p>PMS Update Date: DD/MM/YY 00:00</p>
-          <p>Aosodomoro Update Date: DD/MM/YY 00:00</p>
-          <p>Collection Profile Update Date: DD/MM/YY 00:00</p>
+          <p>PMS Update Date: {pmsUpdatedAt ? new Date(pmsUpdatedAt).toLocaleString() : 'N/A'}</p>
+          <p>Aosodomoro Update Date: {ordersUpdatedAt ? new Date(ordersUpdatedAt).toLocaleString() : 'N/A'}</p>
+          <p>Collection Profile Update Date: {collectionsUpdatedAt ? new Date(collectionsUpdatedAt).toLocaleString() : 'N/A'}</p>
         </div>
       </div>
     </>

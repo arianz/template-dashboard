@@ -21,6 +21,7 @@ collection.connect(err => {
             WITEL VARCHAR(255),
             SALDO_AKHIR FLOAT,
             PERIODE DATE,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (ACCOUNT_NUMBER),
             UNIQUE (ACCOUNT_NUMBER, NIPNAS)
         )

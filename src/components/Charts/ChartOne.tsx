@@ -165,7 +165,7 @@ const ChartOne: React.FC<ChartOneProps> = ({ pmsData }) => {
             </span>
             <div className="w-full">
               <p className="font-semibold text-primary">Periode</p>
-              <p className="text-sm font-medium">{dateRange}</p>
+              <p className="text-sm font-small">{dateRange}</p>
             </div>
           </div>
         </div>

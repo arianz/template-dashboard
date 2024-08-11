@@ -6,7 +6,6 @@ import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Calendar from './pages/Calendar';
-import Chart from './pages/Chart';
 import DetailNipnas from './pages/DetailNipnas';
 import FormElements from './pages/Form/FormElements';
 import FormLayout from './pages/Form/FormLayout';
@@ -96,15 +95,6 @@ function App() {
             <>
               <PageTitle title="Settings" />
               <Settings />
-            </>
-          }
-        />
-        <Route
-          path="/chart"
-          element={
-            <>
-              <PageTitle title="Basic Chart" />
-              <Chart />
             </>
           }
         />
