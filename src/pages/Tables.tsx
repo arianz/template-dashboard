@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import TableThree from '../components/Tables/TableThree';
+import { FaSearch } from "react-icons/fa";
 
 const Tables = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,7 +34,7 @@ const Tables = () => {
       <Breadcrumb pageName="Profil Pelanggan" />
       
       <div className="flex flex-col gap-5">
-        <div className="flex items-center gap-4 mt-2">
+        <div className="flex items-center gap-2 mt-2">
           <input
             type="text"
             value={searchQuery}
@@ -41,8 +42,8 @@ const Tables = () => {
             placeholder="Nama AM, Nipnas"
             className="border border-gray-300 p-2 rounded dark:bg-boxdark dark:text-gray-100 dark:border-strokedark"
           />
-          <button onClick={handleSearch} className="bg-blue-500 text-white p-2 rounded">
-            Search
+          <button onClick={handleSearch} className="bg-blue-500 text-white p-2.5 rounded">
+            <FaSearch className='w-5 h-5' />
           </button>
         </div>
 

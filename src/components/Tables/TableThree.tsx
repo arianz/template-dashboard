@@ -22,6 +22,10 @@ const TableThree = () => {
     fetchData();
   }, []);
 
+  const truncateName = (name: string, maxLength: number) => {
+    return name.length > maxLength ? `${name.substring(0, maxLength)}...` : name;
+  };
+
   const totalPages = Math.ceil(packageData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentItems = packageData.slice(startIndex, startIndex + itemsPerPage);
@@ -52,9 +56,9 @@ const TableThree = () => {
                 onClick={() => navigate(`/detail-am/${packageItem.NAMA_AM}`)}
                 className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800"
               >
-                <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-center text-black dark:text-white">
-                    {packageItem.NAMA_AM}
+                    {truncateName(packageItem.NAMA_AM, 20)}
                   </h5>
                 </td>
                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">

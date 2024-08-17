@@ -51,7 +51,7 @@ pms.connect(err => {
             FLAG_SCALING_MONTHLY_LAYANAN VARCHAR(255),
             FLAG_RECURRING VARCHAR(255),
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            PRIMARY KEY (NIP_NAS)
+            PRIMARY KEY (NIP_NAS, YEAR_ID, MONTH_ID)  -- Menggunakan kombinasi PRIMARY KEY
         )
     `;
 

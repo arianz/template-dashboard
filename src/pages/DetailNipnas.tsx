@@ -90,6 +90,10 @@ const DetailNipnas: React.FC = () => {
     fetchCollectionsUpdatedAt();
   }, [name, nipnas]);
 
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+  };
+
   if (!customerData) {
     return <p>Loading...</p>;
   }
@@ -99,8 +103,8 @@ const DetailNipnas: React.FC = () => {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
         <div className="text-md rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
           <p>Nipnas: {customerData.NIPNAS}</p>
-          <p>Nama Pelanggan: {customerData.NAMA_PELANGGAN}</p>
-          <p>Nama AM: {name}</p>
+          <p>Nama Pelanggan: {truncateText(customerData.NAMA_PELANGGAN, 30)}</p>
+          <p>Nama AM: {truncateText(name || '', 30)}</p>
         </div>
       </div>
 

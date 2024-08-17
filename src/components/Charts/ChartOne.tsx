@@ -6,6 +6,15 @@ interface ChartOneProps {
   pmsData: any[];
 }
 
+// Fungsi untuk mengonversi MONTH_ID menjadi nama bulan
+const getMonthName = (monthId: number) => {
+  const monthNames = [
+    "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+  ];
+  return monthNames[monthId - 1] || "Bulan tidak diketahui";
+};
+
 const options: ApexOptions = {
   legend: {
     show: false,
@@ -121,7 +130,7 @@ const ChartOne: React.FC<ChartOneProps> = ({ pmsData }) => {
 
   useEffect(() => {
     if (pmsData.length > 0) {
-      const categories = pmsData.map((item) => `${item.YEAR_ID}-${item.MONTH_ID}`);
+      const categories = pmsData.map((item) => `${getMonthName(item.MONTH_ID)} ${item.YEAR_ID}`);
       const data = pmsData.map((item) => item.REVENUE);
 
       setState({
@@ -137,22 +146,21 @@ const ChartOne: React.FC<ChartOneProps> = ({ pmsData }) => {
         ...options.xaxis,
         categories,
       };
+
+      // Menghitung rentang waktu berdasarkan data
+      const firstDate = new Date(pmsData[0].YEAR_ID, pmsData[0].MONTH_ID - 1);
+      const lastDate = new Date(pmsData[pmsData.length - 1].YEAR_ID, pmsData[pmsData.length - 1].MONTH_ID - 1);
+
+      const formatDate = (date: Date) => {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}.${month}.${year}`;
+      };
+
+      setDateRange(`${formatDate(firstDate)} - ${formatDate(lastDate)}`);
     }
   }, [pmsData]);
-
-  useEffect(() => {
-    const now = new Date();
-    const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 12, now.getDate());
-
-    const formatDate = (date: Date) => {
-      const day = String(date.getDate()).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const year = date.getFullYear();
-      return `${day}.${month}.${year}`;
-    };
-
-    setDateRange(`${formatDate(oneMonthAgo)} - ${formatDate(now)}`);
-  }, []);
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
@@ -170,7 +178,7 @@ const ChartOne: React.FC<ChartOneProps> = ({ pmsData }) => {
           </div>
         </div>
         <div className="flex w-full max-w-45 justify-end">
-          <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
+          {/*<div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
             <button className="rounded bg-white py-1 px-3 text-xs font-medium text-black shadow-card hover:bg-white hover:shadow-card dark:bg-boxdark dark:text-white dark:hover:bg-boxdark">
               Day
             </button>
@@ -180,7 +188,7 @@ const ChartOne: React.FC<ChartOneProps> = ({ pmsData }) => {
             <button className="rounded py-1 px-3 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
               Month
             </button>
-          </div>
+          </div>*/}
         </div>
       </div>
 

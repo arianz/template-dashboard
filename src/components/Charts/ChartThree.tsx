@@ -1,6 +1,7 @@
 import { ApexOptions } from 'apexcharts';
 import React, { useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { FaSearch } from 'react-icons/fa';
 
 interface ChartThreeState {
   series: number[];
@@ -12,7 +13,7 @@ const options: ApexOptions = {
     type: 'donut',
   },
   colors: ['#3C50E0', '#6577F3', '#8FD0EF', '#0FADCF'],
-  labels: ['Desktop', 'Tablet', 'Mobile', 'Unknown'],
+  labels: ['Nilai A', 'Nilai B', 'Nilai C', 'Nilai D'],
   legend: {
     show: false,
     position: 'bottom',
@@ -64,11 +65,24 @@ const ChartThree: React.FC = () => {
 
   return (
     <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
-      <div className="mb-3 justify-between gap-4 sm:flex">
+      <div className="mb-5 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
-            Visitors Analytics
+            Rekap Grafik
           </h5>
+        </div>
+      </div>
+      <div className='flex gap-3'>
+        <div className="flex gap-2 ml-auto">
+          <input
+            type="text"
+            value=""
+            placeholder="Status order"
+            className="border border-gray-300 p-2 rounded dark:bg-form-input dark:text-white dark:border-slate-600"
+          />
+          <button className="bg-blue-500 text-white p-2.5 rounded">
+            <FaSearch className='w-5 h-5' />
+          </button>
         </div>
         <div>
           <div className="relative z-20 inline-block">
@@ -107,13 +121,12 @@ const ChartThree: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <div className="mb-2">
+      <div className="my-5">
         <div id="chartThree" className="mx-auto flex justify-center">
           <ReactApexChart
             options={options}
             series={state.series}
-            type="donut"
+            type="pie"
           />
         </div>
       </div>
@@ -123,7 +136,7 @@ const ChartThree: React.FC = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Desktop </span>
+              <span> Kolom A </span>
               <span> 65% </span>
             </p>
           </div>
@@ -132,7 +145,7 @@ const ChartThree: React.FC = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#6577F3]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Tablet </span>
+              <span> Kolom B </span>
               <span> 34% </span>
             </p>
           </div>
@@ -141,7 +154,7 @@ const ChartThree: React.FC = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#8FD0EF]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Mobile </span>
+              <span> Kolom C </span>
               <span> 45% </span>
             </p>
           </div>
@@ -150,7 +163,7 @@ const ChartThree: React.FC = () => {
           <div className="flex w-full items-center">
             <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#0FADCF]"></span>
             <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Unknown </span>
+              <span> Kolom D </span>
               <span> 12% </span>
             </p>
           </div>

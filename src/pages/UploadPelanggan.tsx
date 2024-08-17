@@ -50,11 +50,38 @@ const UploadPelanggan: React.FC = () => {
                     const workbook = XLSX.read(binaryStr, { type: 'binary' });
                     const firstSheetName = workbook.SheetNames[0];
                     const worksheet = workbook.Sheets[firstSheetName];
-                    const data: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    let data: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: ""});
+
+                    data = data.filter(row => row.some(cell => cell !== ""));
+                    const headers = data[0];
+
+                    // Convert date numbers only in specific columns (e.g., TANGGAL_UPDATE)
+                    data = data.map((row) =>
+                        row.map((cell, colIndex) => {
+                            const header = headers[colIndex];
+
+                            // Only format cells in the "TANGGAL_UPDATE" column
+                            if (header === 'TANGGAL_UPDATE' || header === 'ORDER_CREATED_DATE' && typeof cell === 'number') {
+                                {/*const possibleDate = XLSX.SSF.format('DD/MM/YYYY', cell);
+                                const isDate = possibleDate.includes('/') && new Date(possibleDate).getFullYear() > 1900;
+                                return isDate ? possibleDate : cell;*/}
+                                try {
+                                    const formattedDate = XLSX.SSF.format('yyyy-mm-dd', cell);
+                                    return formattedDate.includes('undefined') ? cell : formattedDate;
+                                } catch (error) {
+                                    console.error(`Error formatting date for header: ${header}`, error);
+                                    return cell; // Kembalikan cell jika format gagal
+                                }
+                            }
+
+                            return cell; // Leave all other cells as they are
+                        })
+                    );
+                    
                     setFileData(data);
                     setFileName(file.name);
 
-                    if (data.length <= 1) {
+                    if (data.length <= 1 || data.slice(1).every(row => row.length === 0)) {
                         setWarningMessage("File yang diupload tidak memiliki data/kosong");
                         setIsSuccess(false);
                         setIsFileValid(false);
@@ -130,9 +157,6 @@ const UploadPelanggan: React.FC = () => {
         }
 
         try {
-            // Asumsi ada API untuk menghapus data berdasarkan YEAR_ID dan MONTH_ID
-            // await deletePmsData(year, month);
-            // Setelah berhasil menghapus, Anda mungkin ingin memperbarui pmsData
             setPmsData(prevData => prevData.filter(item => !(item.YEAR_ID === year && item.MONTH_ID === month)));
           } catch (error) {
             console.error('Error deleting data:', error);
@@ -140,10 +164,10 @@ const UploadPelanggan: React.FC = () => {
     };
     
     const templates = [
-        { name: "TEMPLATE MAPPING AM.csv", path: "../templates/TEMPLATE MAPPING AM.csv" },
-        { name: "TEMPLATE AOSODOMORO.csv", path: "../templates/TEMPLATE AOSODOMORO.csv" },
-        { name: "TEMPLATE PMS.csv", path: "../templates/TEMPLATE PMS.csv" },
-        { name: "TEMPLATE COLLECTION.csv", path: "../templates/TEMPLATE COLLECTION.csv" },
+        { name: "TEMPLATE MAPPING AM", path: "../templates/TEMPLATE MAPPING AM.xlsx" },
+        { name: "TEMPLATE AOSODOMORO", path: "../templates/TEMPLATE AOSODOMORO.xlsx" },
+        { name: "TEMPLATE PMS", path: "../templates/TEMPLATE PMS.xlsx" },
+        { name: "TEMPLATE COLLECTION", path: "../templates/TEMPLATE COLLECTION.xlsx" },
     ];
 
     const totalPages = fileData ? Math.ceil((fileData.length - 1) / rowsPerPage) : 0;
@@ -161,15 +185,12 @@ const UploadPelanggan: React.FC = () => {
                         }}>
                             <div className="flex flex-row gap-5.5 p-6.5">
                                 <div className="w-1/2">
-                                    <label className="mb-3 block text-black dark:text-white">
-                                        Select Table
-                                    </label>
                                     <select
                                         className="block appearance-none w-full dark:bg-form-input border border-gray-400 dark:border-form-strokedark hover:border-gray-500 px-4 py-3.5 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline dark:text-white"
                                         value={tableName}
                                         onChange={(e) => setTableName(e.target.value)}
                                     >
-                                        <option value="">Select a table</option>
+                                        <option value="">Select a table...</option>
                                         <option value="mapping_am">Mapping AM</option>
                                         <option value="pms">PMS</option>
                                         <option value="aosodomoro">Aosodomoro</option>
@@ -177,9 +198,6 @@ const UploadPelanggan: React.FC = () => {
                                     </select>
                                 </div>
                                 <div className='w-1/2'>
-                                    <label className="mb-3 block text-black dark:text-white">
-                                        Attach file
-                                    </label>
                                     <input
                                         type="file"
                                         accept=".xlsx, .csv"
@@ -189,7 +207,6 @@ const UploadPelanggan: React.FC = () => {
                                     />
                                 </div>
                                 <div className="w-1/2">
-                                    <h4 className="text-black dark:text-white mb-3">Download Templates:</h4>
                                     <div className="relative inline-block w-full text-black dark:text-white">
                                         <select
                                             className="block appearance-none w-full dark:bg-form-input border border-gray-400 dark:border-form-strokedark hover:border-gray-500 px-4 py-3.5 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline dark:text-white"
@@ -270,7 +287,7 @@ const UploadPelanggan: React.FC = () => {
                                 
                                 <button
                                     type="submit"
-                                    className={`mt-4 w-full cursor-pointer rounded-lg border border-primary bg-primary p-3 text-white transition hover:bg-opacity-90 disabled:cursor-not-allowed ${!isFileValid ? 'pointer-not-allowed opacity-50' : ''}`}
+                                    className={`mt-2 w-full cursor-pointer rounded-lg border border-primary bg-primary p-3 text-white transition hover:bg-opacity-90 disabled:cursor-not-allowed ${!isFileValid ? 'pointer-not-allowed opacity-50' : ''}`}
                                     disabled={!fileData || !isFileValid}
                                 >
                                     Upload
@@ -337,11 +354,11 @@ const UploadPelanggan: React.FC = () => {
                         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
                         <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
                             <div>
-                                <h3 className="text-lg leading-6 font-medium text-gray-900">
+                                <h3 className="text-lg leading-6 font-medium text-black">
                                     Result
                                 </h3>
                                 <div className="mt-2">
-                                    <p className="text-sm text-gray-500">
+                                    <p className="text-sm text-black">
                                         {resultMessage}
                                     </p>
                                 </div>

@@ -17,6 +17,9 @@ import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
 import TableDetails from './pages/TableDetails';
 import UploadPelanggan from './pages/UploadPelanggan';
+import RekapOrder from './pages/Billcomp/RekapOrder';
+import InputOrder from './pages/Billcomp/InputOrder';
+import DetailOrder from './pages/Billcomp/DetailOrder';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -35,6 +38,33 @@ function App() {
   ) : (
     <DefaultLayout>
       <Routes>
+        <Route
+          path="/detail-order"
+          element={
+            <>
+              <PageTitle title="Detail Order" />
+              <DetailOrder />
+            </>
+          }
+        />
+        <Route
+          path="/input-order"
+          element={
+            <>
+              <PageTitle title="Input Order" />
+              <InputOrder />
+            </>
+          }
+        />
+        <Route
+          path="/rekap-order"
+          element={
+            <>
+              <PageTitle title="Rekap Order" />
+              <RekapOrder />
+            </>
+          }
+        />
         <Route
           path="/detail-am/:name/:nipnas"
           element={
