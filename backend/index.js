@@ -10,6 +10,7 @@ import upload_router from './routes/UploadRoute.js';
 import pms from './models/PMSModel.js';
 import aosodomoro from './models/AosodomoroModel.js';
 import collection from './models/CollectionModel.js';
+import lop_router from './routes/LOPRoute.js';
 
 const app = express();
 app.use(cors());
@@ -20,6 +21,7 @@ app.use(pms_router);
 app.use(aosodomoro_router);
 app.use(collection_router);
 app.use(upload_router);
+app.use(lop_router);
 const port = 5000; // Port yang digunakan
 
 // Corrected API endpoint

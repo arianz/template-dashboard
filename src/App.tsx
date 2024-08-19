@@ -20,6 +20,8 @@ import UploadPelanggan from './pages/UploadPelanggan';
 import RekapOrder from './pages/Billcomp/RekapOrder';
 import InputOrder from './pages/Billcomp/InputOrder';
 import DetailOrder from './pages/Billcomp/DetailOrder';
+import InputLOP from './components/Forms/InputLOP';
+import DetailLOP from './components/Tables/DetailLOP';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,6 +40,24 @@ function App() {
   ) : (
     <DefaultLayout>
       <Routes>
+      <Route
+          path="/detail-lop"
+          element={
+            <>
+              <PageTitle title="Detail LOP" />
+              <DetailLOP />
+            </>
+          }
+        />
+        <Route
+          path="/input-lop"
+          element={
+            <>
+              <PageTitle title="Input LOP" />
+              <InputLOP />
+            </>
+          }
+        />
         <Route
           path="/detail-order"
           element={
