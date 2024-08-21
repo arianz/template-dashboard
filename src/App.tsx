@@ -22,6 +22,8 @@ import InputOrder from './pages/Billcomp/InputOrder';
 import DetailOrder from './pages/Billcomp/DetailOrder';
 import InputLOP from './components/Forms/InputLOP';
 import DetailLOP from './components/Tables/DetailLOP';
+import PrivateRoute from './components/PrivateRoute';
+import WarningAccess from './components/WarningAccess';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -35,173 +37,43 @@ function App() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
+  const isAuthRoute = pathname.startsWith('/auth');
+
   return loading ? (
     <Loader />
+  ) : isAuthRoute ? (
+    <Routes>
+      <Route path="/auth/signin" element={<SignIn />} />
+      <Route path="/auth/signup" element={<SignUp />} />
+    </Routes>
   ) : (
     <DefaultLayout>
       <Routes>
-      <Route
-          path="/detail-lop"
-          element={
-            <>
-              <PageTitle title="Detail LOP" />
-              <DetailLOP />
-            </>
-          }
-        />
-        <Route
-          path="/input-lop"
-          element={
-            <>
-              <PageTitle title="Input LOP" />
-              <InputLOP />
-            </>
-          }
-        />
-        <Route
-          path="/detail-order"
-          element={
-            <>
-              <PageTitle title="Detail Order" />
-              <DetailOrder />
-            </>
-          }
-        />
-        <Route
-          path="/input-order"
-          element={
-            <>
-              <PageTitle title="Input Order" />
-              <InputOrder />
-            </>
-          }
-        />
-        <Route
-          path="/rekap-order"
-          element={
-            <>
-              <PageTitle title="Rekap Order" />
-              <RekapOrder />
-            </>
-          }
-        />
-        <Route
-          path="/detail-am/:name/:nipnas"
-          element={
-            <>
-              <PageTitle title="Detail NIPNAS" />
-              <DetailNipnas />
-            </>
-          }
-        />
-        <Route
-          path="/calendar"
-          element={
-            <>
-              <PageTitle title="Calendar" />
-              <Calendar />
-            </>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <>
-              <PageTitle title="Profile" />
-              <Profile />
-            </>
-          }
-        />
-        <Route
-          path="/forms/form-elements"
-          element={
-            <>
-              <PageTitle title="Form Elements" />
-              <FormElements />
-            </>
-          }
-        />
-        <Route
-          path="/forms/form-layout"
-          element={
-            <>
-              <PageTitle title="Form Layout" />
-              <FormLayout />
-            </>
-          }
-        />
-        <Route
-          index
-          element={
-            <>
-              <PageTitle title="Profile Pelanggan" />
-              <Tables />
-            </>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <>
-              <PageTitle title="Settings" />
-              <Settings />
-            </>
-          }
-        />
-        <Route
-          path="/ui/alerts"
-          element={
-            <>
-              <PageTitle title="Alerts" />
-              <Alerts />
-            </>
-          }
-        />
-        <Route
-          path="/ui/buttons"
-          element={
-            <>
-              <PageTitle title="Buttons" />
-              <Buttons />
-            </>
-          }
-        />
-        <Route
-          path="/auth/signin"
-          element={
-            <>
-              <PageTitle title="Signin" />
-              <SignIn />
-            </>
-          }
-        />
-        <Route
-          path="/auth/signup"
-          element={
-            <>
-              <PageTitle title="Signup" />
-              <SignUp />
-            </>
-          }
-        />
-        <Route
-          path="/detail-am/:name"
-          element={
-            <>
-              <PageTitle title="Detail AM" />
-              <TableDetails />
-            </>
-          }
-        />
-        <Route
-          path="/upload-pelanggan"
-          element={
-            <>
-              <PageTitle title="Upload Pelanggan" />
-              <UploadPelanggan />
-            </>
-          }
-        />
+        <Route path="/warning-access" element={<WarningAccess />} />
+        <Route path="/detail-lop" element={<DetailLOP />} />
+        <Route path="/input-lop" element={<InputLOP />} />
+        <Route path="/detail-order" element={<DetailOrder />} />
+        <Route path="/input-order" element={<InputOrder />} />
+        <Route path="/rekap-order" element={<RekapOrder />} />
+        <Route path="/detail-am/:name/:nipnas" element={<DetailNipnas />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/forms/form-elements" element={<FormElements />} />
+        <Route path="/forms/form-layout" element={<FormLayout />} />
+        <Route index element={
+          <PrivateRoute allowedRoles={['Manajemen', 'AM', 'Unit PRQ']}>
+            <Tables />
+          </PrivateRoute>
+        } />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/ui/alerts" element={<Alerts />} />
+        <Route path="/ui/buttons" element={<Buttons />} />
+        <Route path="/detail-am/:name" element={<TableDetails />} />
+        <Route path="/upload-pelanggan" element={
+          <PrivateRoute allowedRoles={['Unit PRQ']}>
+            <UploadPelanggan />
+          </PrivateRoute>
+        } />
       </Routes>
     </DefaultLayout>
   );

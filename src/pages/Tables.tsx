@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import TableThree from '../components/Tables/TableThree';
 import { FaSearch } from "react-icons/fa";
 
@@ -31,10 +30,8 @@ const Tables = () => {
 
   return (
     <>
-      <Breadcrumb pageName="Profil Pelanggan" />
-      
       <div className="flex flex-col gap-5">
-        <div className="flex items-center gap-2 mt-2">
+        <div className="flex justify-end gap-2 mt-2">
           <input
             type="text"
             value={searchQuery}

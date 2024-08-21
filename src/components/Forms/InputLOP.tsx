@@ -83,11 +83,18 @@ const InputLOP = () => {
         <div className="flex justify-center items-center">
           <div className="w-full max-w-xl p-6 rounded-lg border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-center text-black dark:text-white">
-                Halaman {currentPage} dari {totalPages}
-              </h3>
+              <div className="w-full bg-gray-300 rounded-full h-2.5 relative">
+                <div
+                  className="bg-blue-500 h-2.5 rounded-full flex items-center justify-center text-black dark:text-white text-xs"
+                  style={{ width: `${(currentPage / totalPages) * 100}%` }}
+                >
+                  <span className="absolute right-0 pr-1">
+                    {Math.round((currentPage / totalPages) * 100)}%
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
+            <div className="flex flex-col gap-4 p-6.5">
               {currentPage === 1 && (
                 <>
                   <div>
@@ -96,7 +103,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Order Type"
+                      placeholder="Masukkan data Order Type"
                       name="orderType"
                       value={formData.orderType}
                       onChange={handleChange}
@@ -109,7 +116,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Nama AM"
+                      placeholder="Masukkan data Nama AM"
                       name="namaAM"
                       value={formData.namaAM}
                       onChange={handleChange}
@@ -122,7 +129,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Pelanggan"
+                      placeholder="Masukkan data Pelanggan"
                       name="pelanggan"
                       value={formData.pelanggan}
                       onChange={handleChange}
@@ -135,7 +142,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="NIPNAS"
+                      placeholder="Masukkan data NIPNAS"
                       name="nipnas"
                       value={formData.nipnas}
                       onChange={handleChange}
@@ -153,7 +160,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Judul Project"
+                      placeholder="Masukkan data Judul Project"
                       name="judulProject"
                       value={formData.judulProject}
                       onChange={handleChange}
@@ -166,7 +173,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Nama Produk"
+                      placeholder="Masukkan data Nama Produk"
                       name="namaProduk"
                       value={formData.namaProduk}
                       onChange={handleChange}
@@ -179,7 +186,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Est OTC"
+                      placeholder="Masukkan data Est OTC"
                       name="estOTC"
                       value={formData.estOTC}
                       onChange={handleChange}
@@ -192,7 +199,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Est Bulanan"
+                      placeholder="Masukkan data Est Bulanan"
                       name="estBulanan"
                       value={formData.estBulanan}
                       onChange={handleChange}
@@ -210,7 +217,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Est Total Q1"
+                      placeholder="Masukkan data Est Total Q1"
                       name="estTotalQ1"
                       value={formData.estTotalQ1}
                       onChange={handleChange}
@@ -223,7 +230,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Est Total Project 2024"
+                      placeholder="Masukkan data Est Total Project 2024"
                       name="estTotalProject2024"
                       value={formData.estTotalProject2024}
                       onChange={handleChange}
@@ -236,7 +243,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Est Total Project"
+                      placeholder="Masukkan data Est Total Project"
                       name="estTotalProject"
                       value={formData.estTotalProject}
                       onChange={handleChange}
@@ -249,7 +256,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Bulan Billcomp"
+                      placeholder="Masukkan data Bulan Billcomp"
                       name="bulanBillcomp"
                       value={formData.bulanBillcomp}
                       onChange={handleChange}
@@ -267,7 +274,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Periode Kontrak 2024"
+                      placeholder="Masukkan data Periode Kontrak 2024"
                       name="periodeKontrak2024"
                       value={formData.periodeKontrak2024}
                       onChange={handleChange}
@@ -276,11 +283,11 @@ const InputLOP = () => {
                   </div>
                   <div>
                     <label className="mb-3 block text-black dark:text-white">
-                      Nilai  Billcomp
+                      Nilai Billcomp
                     </label>
                     <input
                       type="text"
-                      placeholder="Nilai Billcomp"
+                      placeholder="Masukkan data Nilai Billcomp"
                       name="nilaiBillcomp"
                       value={formData.nilaiBillcomp}
                       onChange={handleChange}
@@ -293,7 +300,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Status Project"
+                      placeholder="Masukkan data Status Project"
                       name="statusProject"
                       value={formData.statusProject}
                       onChange={handleChange}
@@ -306,7 +313,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Poin"
+                      placeholder="Masukkan data Poin"
                       name="poin"
                       value={formData.poin}
                       onChange={handleChange}
@@ -324,7 +331,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Status Funnel"
+                      placeholder="Masukkan data Status Funnel"
                       name="statusFunnel"
                       value={formData.statusFunnel}
                       onChange={handleChange}
@@ -337,7 +344,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Kategori Kontrak"
+                      placeholder="Masukkan data Kategori Kontrak"
                       name="kategoriKontrak"
                       value={formData.kategoriKontrak}
                       onChange={handleChange}
@@ -350,7 +357,7 @@ const InputLOP = () => {
                     </label>
                     <input
                       type="text"
-                      placeholder="Kategori LOP"
+                      placeholder="Masukkan data Kategori LOP"
                       name="kategoriLOP"
                       value={formData.kategoriLOP}
                       onChange={handleChange}
@@ -367,7 +374,7 @@ const InputLOP = () => {
                     className={`px-4 py-2 rounded bg-gray-300 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
                     disabled={currentPage === 1}
                     >
-                    Previous
+                    Kembali
                     </button>
                     {currentPage < totalPages ? (
                     <button

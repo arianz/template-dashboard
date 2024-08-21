@@ -16,10 +16,12 @@
   "dependencies": {
     "apexcharts": "^3.41.0",
     "axios": "^1.7.2",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "date-fns": "^3.6.0",
     "flatpickr": "^4.6.13",
     "headlessui": "^0.0.0",
+    "jsonwebtoken": "^9.0.2",
     "jsvectormap": "^1.5.3",
     "match-sorter": "^6.3.1",
     "multer": "^1.4.5-lts.1",

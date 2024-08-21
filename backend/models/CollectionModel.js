@@ -20,7 +20,7 @@ collection.connect(err => {
             PAYMENT_CAT VARCHAR(255),
             WITEL VARCHAR(255),
             SALDO_AKHIR FLOAT,
-            PERIODE DATE,
+            PERIODE VARCHAR(255),
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (ACCOUNT_NUMBER),
             UNIQUE (ACCOUNT_NUMBER, NIPNAS)
