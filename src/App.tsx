@@ -21,7 +21,8 @@ import RekapOrder from './pages/Billcomp/RekapOrder';
 import InputOrder from './pages/Billcomp/InputOrder';
 import DetailOrder from './pages/Billcomp/DetailOrder';
 import InputLOP from './components/Forms/InputLOP';
-import DetailLOP from './components/Tables/DetailLOP';
+import DetailLOP from './components/Tables/DetailLOP'
+import EditLOP from './components/Forms/EditLOP';
 import PrivateRoute from './components/PrivateRoute';
 import WarningAccess from './components/WarningAccess';
 
@@ -52,6 +53,7 @@ function App() {
         <Route path="/warning-access" element={<WarningAccess />} />
         <Route path="/detail-lop" element={<DetailLOP />} />
         <Route path="/input-lop" element={<InputLOP />} />
+        <Route path="/edit-lop/:judulProject/:namaProduk" element={<EditLOP />} />
         <Route path="/detail-order" element={<DetailOrder />} />
         <Route path="/input-order" element={<InputOrder />} />
         <Route path="/rekap-order" element={<RekapOrder />} />

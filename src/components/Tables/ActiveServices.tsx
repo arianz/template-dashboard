@@ -97,7 +97,7 @@ const ActiveServices: React.FC<ActiveServicesProps> = ({ pmsData }) => {
           &larr; Oldest
         </button>
         <span className="font-small text-black dark:text-white">
-          Page {currentPage} of {totalPages}
+          {currentPage} / {totalPages}
         </span>
         <button
           onClick={handleNextPage}

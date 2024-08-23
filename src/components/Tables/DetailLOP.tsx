@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaSearch, FaEdit, FaTrashAlt, FaDownload, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import logo from '../../images/logo/logo-telkom.png';
+import autoTable from 'jspdf-autotable';
 
 type LOP = {
   orderType: string;
@@ -29,6 +32,7 @@ const DetailLOP = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +49,6 @@ const DetailLOP = () => {
   }, []);
 
   useEffect(() => {
-    // Reset to page 1 whenever searchTerm changes
     setCurrentPage(1);
   }, [searchTerm]);
 
@@ -74,6 +77,94 @@ const DetailLOP = () => {
     }
   };
 
+  const handleEdit = (judulProject: string, namaProduk: string) => {
+    navigate(`/edit-lop/${judulProject}/${namaProduk}`);
+  };
+
+  const handleDelete = async (judulProject: string, namaProduk: string) => {
+    try {
+      const response = await fetch(`http://localhost:5000/lop/${judulProject}/${namaProduk}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setLopData((prevData) =>
+          prevData.filter((lop) => !(lop.judulProject === judulProject && lop.namaProduk === namaProduk)
+        ));
+        console.log('LOP data deleted successfully');
+      } else {
+        console.error('Failed to delete LOP');
+      }
+    } catch (error) {
+      console.error('Error deleting LOP:', error);
+    }
+  };
+
+  const handleDownload = (judulProject: string, namaProduk: string) => {
+    const lop = lopData.find((data) => data.judulProject === judulProject && data.namaProduk === namaProduk);
+
+    if (lop) {
+      const doc = new jsPDF();
+
+      // Mengambil tanggal dan waktu download
+      const currentDate = new Date();
+      const downloadTime = currentDate.toLocaleString();
+
+      // Menambahkan logo
+      const imgWidth = 40;
+      const imgHeight = 30;
+      doc.addImage(logo, 'PNG', 10, 5, imgWidth, imgHeight);
+
+      // Menambahkan judul di tengah atas
+      doc.setFontSize(16);
+      doc.text("Detail LOP", 105, 50, { align: 'center' });
+
+      // Menambahkan waktu download di pojok kanan atas
+      doc.setFontSize(10);
+      doc.text(`Downloaded: ${downloadTime}`, 200, 10, { align: 'right' });
+
+      // Menambahkan detail LOP
+      autoTable(doc, {
+        startY: 60, // Tempat dimulainya tabel
+        head: [['Field', 'Value']],
+        body: [
+            ['Order Type', lop.orderType],
+            ['Nama AM', lop.namaAM],
+            ['Pelanggan', lop.pelanggan],
+            ['NIPNAS', lop.nipnas],
+            ['Judul Project', lop.judulProject],
+            ['Nama Produk', lop.namaProduk],
+            ['Est. OTC', lop.estOTC],
+            ['Est. Bulanan', lop.estBulanan],
+            ['Est. Total Q1', lop.estTotalQ1],
+            ['Est. Total Project 2024', lop.estTotalProject2024],
+            ['Est. Total Project', lop.estTotalProject],
+            ['Bulan Billcomp', lop.bulanBillcomp],
+            ['Periode Kontrak 2024', lop.periodeKontrak2024],
+            ['Nilai Billcomp', lop.nilaiBillcomp],
+            ['Status Project', lop.statusProject],
+            ['Poin', lop.poin],
+            ['Status Funnel', lop.statusFunnel],
+            ['Kategori Kontrak', lop.kategoriKontrak],
+            ['Kategori LOP', lop.kategoriLOP],
+        ],
+        styles: {
+            fontSize: 10,
+            cellPadding: 3,
+        },
+        headStyles: {
+            fillColor: [221, 221, 221],
+            textColor: [0, 0, 0],
+        },
+        alternateRowStyles: {
+            fillColor: [245, 245, 245],
+        },
+    });
+
+      doc.save(`Detail LOP ${lop.judulProject}-${lop.namaProduk}.pdf`);
+    }
+  };
+
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex gap-2 my-3">
@@ -98,7 +189,7 @@ const DetailLOP = () => {
               'Nama Produk', 'Est. OTC', 'Est. Bulanan', 'Est. Total Q1', 
               'Est. Total Project 2024', 'Est. Total Project', 'Bulan Billcomp',
               'Periode Kontrak 2024', 'Nilai Billcomp', 'Status Project',
-              'Poin', 'Status Funnel', 'Kategori Kontrak', 'Kategori LOP'
+              'Poin', 'Status Funnel', 'Kategori Kontrak', 'Kategori LOP', 'Aksi'
             ].map((header, index) => (
               <div
                 key={index}
@@ -131,6 +222,28 @@ const DetailLOP = () => {
                     {value}
                   </div>
                 ))}
+                <div
+                  className={`px-4 py-4 border-b border-gray-200 text-center dark:border-gray-700 ${columnWidth} flex items-center justify-center space-x-2`}
+                >
+                  <button
+                    className="text-yellow-500 hover:text-yellow-700"
+                    onClick={() => handleEdit(lop.judulProject, lop.namaProduk)}
+                  >
+                    <FaEdit className="w-5 h-5" />
+                  </button>
+                  <button
+                    className="text-red-500 hover:text-red-700"
+                    onClick={() => handleDelete(lop.judulProject, lop.namaProduk)}
+                  >
+                    <FaTrashAlt className="w-5 h-5" />
+                  </button>
+                  <button
+                    className="text-green-500 hover:text-green-700"
+                    onClick={() => handleDownload(lop.judulProject, lop.namaProduk)}
+                  >
+                    <FaDownload className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
             ))
           ) : (

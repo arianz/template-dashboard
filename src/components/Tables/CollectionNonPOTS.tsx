@@ -9,6 +9,8 @@ interface CollectionNonPOTSProps {
 const CollNonPOTS: React.FC<CollectionNonPOTSProps> = ({ collectionsData }) => {
   const { nipnas } = useParams();
   const [collections, setCollections] = useState<any[]>(collectionsData);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
 
   useEffect(() => {
     if (nipnas) {
@@ -21,6 +23,17 @@ const CollNonPOTS: React.FC<CollectionNonPOTSProps> = ({ collectionsData }) => {
         });
     }
   }, [nipnas]);
+
+  const totalPages = Math.ceil(collections.length / itemsPerPage);
+  const currentItems = collections.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -50,7 +63,7 @@ const CollNonPOTS: React.FC<CollectionNonPOTSProps> = ({ collectionsData }) => {
             </tr>
           </thead>
           <tbody>
-            {collections.map((item, key) => (
+            {currentItems.map((item, key) => (
               <tr
                 key={key}
                 className="cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800"
@@ -89,6 +102,25 @@ const CollNonPOTS: React.FC<CollectionNonPOTSProps> = ({ collectionsData }) => {
             ))}
           </tbody>
         </table>
+        <div className="flex justify-center items-center mt-4">
+          <button
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+            className="px-4 py-2 mx-1 bg-gray-300 rounded disabled:opacity-50"
+          >
+            &lt;
+          </button>
+          <span className="mx-2 text-lg bg-gray-200 rounded">
+            {currentPage}
+          </span>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 mx-1 bg-gray-300 rounded disabled:opacity-50"
+          >
+            &gt;
+          </button>
+        </div>
       </div>
     </div>
   );
