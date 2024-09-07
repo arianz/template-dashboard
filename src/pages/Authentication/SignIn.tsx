@@ -44,7 +44,7 @@ const SignIn: React.FC = () => {
       </div>
 
       <div className="md:w-1/2 flex flex-col justify-center items-center bg-white border-t border-stroke dark:bg-boxdark dark:border-strokedark md:border-l">
-        <div className="w-full p-6 sm:p-10 lg:p-20">
+        <div className="w-full p-6 sm:p-10 lg:p-15">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-black dark:text-white">Sign In to Dashboard</h2>
             <DarkModeSwitcher />
@@ -98,7 +98,7 @@ const SignIn: React.FC = () => {
 
           <div className="mt-6 text-center">
             <p>
-              Already have an account?{' '}
+              Don't have an account?{' '}
               <Link to="/auth/signup" className="text-primary hover:underline">
                 Sign up
               </Link>
