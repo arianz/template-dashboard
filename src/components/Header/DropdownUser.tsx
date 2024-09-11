@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
-import UserOne from '../../images/user/userr.png';
 import { FaRegUser } from 'react-icons/fa';
 import { IoIosArrowDown } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -34,10 +33,11 @@ const DropdownUser = () => {
             {user ? user.role : 'Pekerjaan'}
           </span>
         </span>
-        <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+        <span className="h-12 w-12 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 space-x-1">
+          <FaRegUser className="text-2xl text-gray-500 dark:text-white" />
+          <IoIosArrowDown />
         </span>
-        <IoIosArrowDown />
+        
       </Link>
 
       {/* <!-- Dropdown Start --> */}
@@ -45,7 +45,7 @@ const DropdownUser = () => {
         <div
           className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark`}
         >
-          <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+          {/*<ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
             <li>
               <Link
                 to="/profile"
@@ -64,7 +64,7 @@ const DropdownUser = () => {
                 Account Settings
               </Link>
             </li>
-          </ul>
+          </ul>*/}
           <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
             <Link to="/auth/signin" className="flex items-center gap-3.5">
               <BsBoxArrowLeft />
